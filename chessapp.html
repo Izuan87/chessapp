@@ -84,7 +84,7 @@ body{font-family:'Segoe UI','Nunito',sans-serif;background:#e8edf2;color:#333;di
 /* ── GAME BOARD AREA (shown during play) ── */
 #game-area{display:none;flex-direction:column;align-items:center;flex:1;overflow:hidden}
 #game-area.active{display:flex}
-#puzzle-label{display:none}
+#puzzle-label{font-size:.72rem;font-weight:600;color:#666;text-align:center;padding:3px 0}
 #instruction{font-size:.82rem;font-weight:800;color:#1a86bb;text-align:center;padding:2px 0 4px;min-height:22px}
 #board-wrap{display:flex;align-items:center;justify-content:center;flex:1}
 #board{display:grid;grid-template-columns:repeat(8,1fr);border:3px solid #b58863;border-radius:4px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.25)}
@@ -478,7 +478,7 @@ function applyLanguage(){
     document.getElementById('hero-title').textContent="Let's play chess";
       document.getElementById('hero-title').textContent=tr('heroHomeTitle');
     document.getElementById('hero-sub').textContent=tr('heroHomeSub');
-    document.getElementById('puzzle-label').textContent='';
+    document.getElementById('puzzle-label').textContent=tr('selectPiece');
     document.getElementById('instruction').textContent=tr('choosePiece');
   }
 
@@ -780,7 +780,8 @@ function render(){
   document.getElementById('steps-left').textContent='🚶 '+totalSteps+' '+(LANG==='BM'?'langkah':'steps');
   document.getElementById('score-display').style.display='none';
   document.getElementById('streak-display').style.display='none';
-  document.getElementById('puzzle-label').textContent='';
+  document.getElementById('puzzle-label').textContent=
+    (S.obstacles.length?'\u2014 '+S.obstacles.length+' \u2614 '+(S.obstacles.length>1?tr('obstacles'):tr('obstacle')):'');
   document.getElementById('instruction').innerHTML=getInstr(piece.id);
   S._lastStars=S.stars.length;
 }
@@ -1193,7 +1194,7 @@ const G={
       document.getElementById('hero-title').textContent=tr('heroHomeTitle');
     document.getElementById('hero-sub').textContent=tr('heroHomeSub');
     document.getElementById('hero-icon').innerHTML=logoMarkup(54);
-    document.getElementById('puzzle-label').textContent='';
+    document.getElementById('puzzle-label').textContent=tr('selectPiece');
     document.getElementById('instruction').textContent=tr('choosePiece');
   }
 };
