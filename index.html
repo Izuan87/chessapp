@@ -5,11 +5,63 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 <title>Catur Cilik!</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 /* ── RESET & BASE ── */
 *{box-sizing:border-box;margin:0;padding:0;touch-action:manipulation}
 html,body{width:100%;height:100%;overflow:hidden}
 body{font-family:'Segoe UI','Nunito',sans-serif;background:#e8edf2;color:#333;display:flex;flex-direction:column;align-items:center;overflow:hidden}
+body.auth-locked{justify-content:center}
+body.auth-locked #topnav,
+body.auth-locked #hero,
+body.auth-locked #result-banner,
+body.auth-locked #main-area{display:none}
+
+/* ── LOGIN ── */
+#login-screen{
+  position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+  padding:24px;background:radial-gradient(circle at top,#66c5ef 0%,#2b9fd8 38%,#1a86bb 100%);
+  z-index:500;
+}
+#login-screen.active{display:flex}
+.login-shell{
+  width:min(100%,420px);background:rgba(255,255,255,.96);border-radius:20px;
+  padding:28px 24px 22px;box-shadow:0 20px 70px rgba(0,0,0,.28);text-align:center;
+}
+.login-logo img{width:76px;height:76px;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(0,0,0,.18))}
+.login-title{font-family:'Fredoka One',cursive;font-size:1.9rem;color:#1a86bb;line-height:1.1;margin:12px 0 6px}
+.login-sub{font-size:.88rem;line-height:1.5;color:#5e6b78;margin-bottom:18px}
+.login-form{display:flex;flex-direction:column;gap:12px;text-align:left}
+.login-field{display:flex;flex-direction:column;gap:5px}
+.login-field label{font-size:.78rem;font-weight:800;color:#1a86bb;letter-spacing:.2px}
+.login-field input{
+  width:100%;border:2px solid #d6e5ef;border-radius:12px;padding:12px 14px;
+  font:700 .95rem 'Nunito','Segoe UI',sans-serif;color:#234;background:#fff;outline:none;
+}
+.password-wrap{position:relative}
+.password-wrap input{padding-right:46px}
+.password-toggle{
+  position:absolute;right:10px;top:50%;transform:translateY(-50%);
+  border:none;background:transparent;color:#5e6b78;cursor:pointer;
+  font-size:1.05rem;line-height:1;padding:6px;border-radius:8px;
+}
+.password-toggle:hover{background:rgba(43,159,216,.1);color:#1a86bb}
+.password-toggle:focus{outline:none;box-shadow:0 0 0 3px rgba(43,159,216,.18)}
+.password-wrap input::-ms-reveal,
+.password-wrap input::-ms-clear{display:none}
+.login-field input:focus{border-color:#2b9fd8;box-shadow:0 0 0 4px rgba(43,159,216,.16)}
+.login-submit{width:100%;margin:4px 0 0;padding:12px 18px;border-radius:12px;font-size:.96rem}
+.login-status{min-height:20px;font-size:.77rem;font-weight:700;text-align:center;color:#c0392b}
+.login-status.success{color:#1e8449}
+.login-foot{margin-top:10px;font-size:.72rem;color:#7b8791;line-height:1.45}
+.logout-btn{padding:5px 12px;display:none}
+body.auth-ready .logout-btn{display:inline-block}
+
+@media (max-width:640px){
+  #login-screen{padding:18px}
+  .login-shell{padding:24px 18px 18px;border-radius:16px}
+  .login-title{font-size:1.7rem}
+}
 
 /* ── TOP NAV ── */
 #topnav{
@@ -238,11 +290,35 @@ body{font-family:'Segoe UI','Nunito',sans-serif;background:#e8edf2;color:#333;di
 <body>
 <div class="stars-bg" id="stars-bg-el"></div>
 
+<div id="login-screen" class="active">
+  <div class="login-shell">
+    <div class="login-logo"><img src="img/SuperRook.png" alt="Catur Cilik logo"></div>
+    <div class="login-title">Catur Cilik!</div>
+    <div class="login-sub">Log in to continue learning chess. Your access stays active for 24 hours before a new login is required.</div>
+    <form class="login-form" id="login-form">
+      <div class="login-field">
+        <label for="login-username">Username</label>
+        <input id="login-username" name="username" type="text" autocomplete="username" required>
+      </div>
+      <div class="login-field">
+        <label for="login-password">Password</label>
+        <div class="password-wrap">
+          <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+          <button id="toggle-password" class="password-toggle" type="button" aria-label="Show password" title="Show password">👁</button>
+        </div>
+      </div>
+      <div class="login-status" id="login-status"></div>
+      <button class="btn btn-go login-submit" id="login-submit" type="submit">Log In</button>
+    </form>
+    </div>
+</div>
+
 <!-- TOP NAV -->
 <div id="topnav">
   <div id="topnav-logo" onclick="G.goHome()"><img src="img/SuperRook.png" alt="SuperRook logo"> Catur Cilik!</div>
   <div id="topnav-right">
     <button class="nav-btn" id="btn-nav-home" onclick="G.goHome()" aria-label="Home" title="Home"><svg class="nav-home-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.8V21h14V9.8"></path><path d="M10 21v-6h4v6"></path></svg></button>
+    <button class="nav-btn logout-btn" id="btn-logout" type="button" onclick="Auth.logout()">Logout</button>
     <div id="lang-switch">
       <button class="nav-btn lang-btn active" id="btn-lang-eng" onclick="setLanguage('ENG')">ENG</button>
       <button class="nav-btn lang-btn" id="btn-lang-bm" onclick="setLanguage('BM')">BM</button>
@@ -357,7 +433,162 @@ const ASSETS={
 const LOGO_RAW_SRC='img/SuperRook.png';
 let LOGO_SRC=LOGO_RAW_SRC;
 const LANG_KEY='caturcilik_lang';
+const AUTH_KEY='caturcilik_auth_v1';
+const AUTH_FILE='config/auth.xlsx';
+const AUTH_DURATION_MS=24*60*60*1000;
 let LANG=localStorage.getItem(LANG_KEY)||'ENG';
+
+const Auth={
+  user:null,
+  users:null,
+  expiryTimer:null,
+  normalizeHeader(value){return String(value||'').trim().toLowerCase();},
+  isActiveStatus(value){
+    const normalized=String(value==null?'':value).trim().toLowerCase();
+    return normalized==='1'||normalized==='true'||normalized==='active'||normalized==='yes';
+  },
+  readCache(){
+    try{
+      const raw=localStorage.getItem(AUTH_KEY);
+      if(!raw)return null;
+      const parsed=JSON.parse(raw);
+      if(!parsed||!parsed.expiresAt||Date.now()>=parsed.expiresAt){
+        localStorage.removeItem(AUTH_KEY);
+        return null;
+      }
+      return parsed;
+    }catch(e){
+      localStorage.removeItem(AUTH_KEY);
+      return null;
+    }
+  },
+  writeCache(user){
+    const session={username:user.username,expiresAt:Date.now()+AUTH_DURATION_MS};
+    localStorage.setItem(AUTH_KEY,JSON.stringify(session));
+    this.user=session;
+    this.scheduleExpiry(session.expiresAt);
+  },
+  clearCache(){
+    if(this.expiryTimer){clearTimeout(this.expiryTimer);this.expiryTimer=null;}
+    localStorage.removeItem(AUTH_KEY);
+    this.user=null;
+  },
+  scheduleExpiry(expiresAt){
+    if(this.expiryTimer){clearTimeout(this.expiryTimer);this.expiryTimer=null;}
+    const delay=Math.max(0,expiresAt-Date.now());
+    this.expiryTimer=setTimeout(()=>{
+      this.clearCache();
+      this.lock('Session expired after 24 hours. Please log in again.');
+    },delay);
+  },
+  lock(message){
+    document.body.classList.add('auth-locked');
+    document.body.classList.remove('auth-ready');
+    const screen=document.getElementById('login-screen');
+    if(screen)screen.classList.add('active');
+    if(message)this.setStatus(message,false);
+  },
+  unlock(){
+    document.body.classList.remove('auth-locked');
+    document.body.classList.add('auth-ready');
+    const screen=document.getElementById('login-screen');
+    if(screen)screen.classList.remove('active');
+    this.setStatus('',false);
+  },
+  setBusy(isBusy){
+    const submit=document.getElementById('login-submit');
+    const username=document.getElementById('login-username');
+    const password=document.getElementById('login-password');
+    if(submit){submit.disabled=isBusy;submit.textContent=isBusy?'Checking...':'Log In';}
+    if(username)username.disabled=isBusy;
+    if(password)password.disabled=isBusy;
+  },
+  setStatus(message,isSuccess){
+    const el=document.getElementById('login-status');
+    if(!el)return;
+    el.textContent=message||'';
+    el.classList.toggle('success',!!isSuccess);
+  },
+  async loadUsers(){
+    if(this.users)return this.users;
+    if(typeof XLSX==='undefined')throw new Error('Login library failed to load.');
+    const response=await fetch(AUTH_FILE,{cache:'no-store'});
+    if(!response.ok)throw new Error('Unable to load login file.');
+    const buffer=await response.arrayBuffer();
+    const workbook=XLSX.read(buffer,{type:'array'});
+    const sheet=workbook.Sheets[workbook.SheetNames[0]];
+    const rows=XLSX.utils.sheet_to_json(sheet,{defval:''});
+    this.users=rows.map(row=>{
+      const normalized={};
+      Object.keys(row).forEach(key=>{normalized[this.normalizeHeader(key)]=row[key];});
+      return {
+        username:String(normalized.username||'').trim(),
+        password:String(normalized.password||''),
+        status:normalized.status
+      };
+    }).filter(user=>user.username&&user.password);
+    return this.users;
+  },
+  async login(username,password){
+    const users=await this.loadUsers();
+    const match=users.find(user=>user.username===username&&user.password===password&&this.isActiveStatus(user.status));
+    if(!match)throw new Error('Invalid username, password, or inactive account.');
+    this.writeCache(match);
+    return match;
+  },
+  applyCachedSession(){
+    const cached=this.readCache();
+    if(!cached)return false;
+    this.user=cached;
+    this.scheduleExpiry(cached.expiresAt);
+    this.unlock();
+    return true;
+  },
+  logout(){
+    this.clearCache();
+    this.lock('Session cleared. Please log in again.');
+    const form=document.getElementById('login-form');
+    if(form)form.reset();
+    const username=document.getElementById('login-username');
+    if(username)username.focus();
+  },
+  bind(){
+    const form=document.getElementById('login-form');
+    const password=document.getElementById('login-password');
+    const toggle=document.getElementById('toggle-password');
+    if(!form)return;
+    if(toggle&&password){
+      toggle.addEventListener('click',()=>{
+        const showing=password.type==='text';
+        password.type=showing?'password':'text';
+        toggle.textContent=showing?'👁':'🙈';
+        toggle.setAttribute('aria-label',showing?'Show password':'Hide password');
+        toggle.setAttribute('title',showing?'Show password':'Hide password');
+      });
+    }
+    form.addEventListener('submit',async(event)=>{
+      event.preventDefault();
+      const username=document.getElementById('login-username');
+      const userValue=username?username.value.trim():'';
+      const passValue=password?password.value:'';
+      if(!userValue||!passValue){
+        this.setStatus('Enter username and password.',false);
+        return;
+      }
+      this.setBusy(true);
+      this.setStatus('Checking credentials...',true);
+      try{
+        await this.login(userValue,passValue);
+        form.reset();
+        this.unlock();
+      }catch(error){
+        this.lock(error.message||'Login failed.');
+      }finally{
+        this.setBusy(false);
+      }
+    });
+  }
+};
 
 const I18N={
   ENG:{
@@ -526,6 +757,8 @@ function applyLogoSource(){
   if(nav)nav.src=LOGO_SRC;
   const heroImg=document.querySelector('#hero-icon img[alt="Catur Cilik logo"]');
   if(heroImg)heroImg.src=LOGO_SRC;
+  const loginImg=document.querySelector('#login-screen .login-logo img');
+  if(loginImg)loginImg.src=LOGO_SRC;
 }
 
 function cleanLogoBackground(){
@@ -1229,6 +1462,8 @@ function launchConfetti(){
 }
 
 (function(){
+  Auth.bind();
+  if(!Auth.applyCachedSession())Auth.lock();
   cleanLogoBackground();
   const s=document.getElementById('stars-bg-el');
   for(let i=0;i<60;i++){const d=document.createElement('div');d.className='star-bg-dot';const sz=1+Math.random()*2.5;d.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;top:${Math.random()*100}vh;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*3}s`;s.appendChild(d);}
