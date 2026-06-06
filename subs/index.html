@@ -28,7 +28,7 @@ body{
 }
 .nav{
   height:52px;
-  background:linear-gradient(180deg,var(--blue) 0%, var(--blue-dark) 100%);
+  background:linear-gradient(180deg,var(--blue) 0%,var(--blue-dark) 100%);
   color:#fff;
   display:flex;
   align-items:center;
@@ -38,9 +38,16 @@ body{
 }
 .brand{
   font-family:'Fredoka One',cursive;
-  letter-spacing:.2px;
-  font-size:1.1rem;
+  letter-spacing:.5px;
+  font-size:1.5rem;
+  display:flex;
+  align-items:center;
+  gap:0;
+  text-shadow:0 1px 4px rgba(0,0,0,.18);
 }
+.brand .blc1{color:#fff}
+.brand .blc2{color:var(--gold)}
+.brand .bstar{color:var(--gold);font-size:.95rem;line-height:1}
 .nav a{
   color:#fff;
   text-decoration:none;
@@ -73,20 +80,31 @@ body{
 }
 .hero-icon{
   flex:0 0 auto;
-  width:110px;
-  height:110px;
   display:flex;
+  flex-direction:column;
   align-items:center;
-  justify-content:center;
+  gap:6px;
   background:transparent;
   pointer-events:none;
-  filter:drop-shadow(0 4px 12px rgba(0,0,0,.22));
 }
 .hero-icon img{
-  width:100%;
-  height:100%;
+  width:110px;
+  height:110px;
   object-fit:contain;
+  filter:drop-shadow(0 4px 12px rgba(0,0,0,.22));
 }
+.hero-logo-name{
+  font-family:'Fredoka One',cursive;
+  font-size:1.6rem;
+  line-height:1;
+  letter-spacing:.5px;
+  white-space:nowrap;
+  filter:drop-shadow(0 1px 3px rgba(0,0,0,.25));
+}
+.hero-logo-name::before{content:'★ ';font-size:.85rem;color:#f0a500;vertical-align:middle}
+.hero-logo-name::after{content:' ★';font-size:.85rem;color:rgba(255,255,255,.6);vertical-align:middle}
+.hlc1{color:#fff}
+.hlc2{color:#f0a500}
 .hero-copy{flex:1;min-width:0;max-width:740px}
 .hero::after{
   content:'';
@@ -124,7 +142,7 @@ h1{
 .grid{
   margin-top:20px;
   display:grid;
-  grid-template-columns:1.1fr .9fr;
+  grid-template-columns:1fr;
   gap:16px;
 }
 .card{
@@ -156,6 +174,21 @@ h2{
   padding:11px 12px;
 }
 .list strong{color:var(--blue-dark)}
+.list .star-icon{
+  flex:0 0 28px;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),#ffcc40);
+  color:#fff;
+  font-size:.9rem;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 3px 8px rgba(240,165,0,.35);
+  flex-shrink:0;
+}
+.list li{display:flex;align-items:center;gap:12px;padding:11px 12px}
 .steps{
   list-style:none;
   display:grid;
@@ -179,6 +212,38 @@ h2{
   justify-content:center;
   font-weight:900;
   flex:0 0 28px;
+}
+.steps-row{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  margin-top:10px;
+}
+.steps-row .steps{flex:1;margin-top:0}
+.steps-mascot{
+  flex:0 0 140px;
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  background:radial-gradient(circle at 42% 38%, rgba(43,159,216,.28) 0%, rgba(240,165,0,.18) 60%, rgba(43,159,216,.12) 100%);
+  border:2px dashed rgba(43,159,216,.25);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+}
+.steps-mascot img{
+  width:128px;
+  height:128px;
+  object-fit:contain;
+  mix-blend-mode:multiply;
+  filter:drop-shadow(0 4px 10px rgba(43,159,216,.2));
+}
+@media(max-width:540px){
+  .steps-row{flex-direction:column;align-items:flex-start}
+  .steps-mascot{align-self:center}
 }
 .price-box{
   margin-top:12px;
@@ -351,26 +416,25 @@ h2{
   color:#6f7d8b;
   font-size:.86rem;
 }
-@media (max-width:860px){
-  .grid{grid-template-columns:1fr}
-}
 @media (max-width:620px){
   .nav{padding:0 12px}
   .brand{font-size:1rem}
   .nav a{padding:6px 10px;font-size:.8rem}
   .hero{padding:22px 16px}
   .hero-inner{gap:10px;align-items:flex-start}
-  .hero-icon{width:72px;height:72px}
+  .hero-icon img{width:72px;height:72px}
+  .hero-logo-name{font-size:1.3rem}
   .wrapper{margin:18px auto 24px}
   .pricing-grid{grid-template-columns:1fr}
+  .p-card{padding:22px 16px}
   .p-promo{margin-top:14px}
 }
 </style>
 </head>
 <body>
   <nav class="nav">
-    <div class="brand">Catur Cilik!</div>
-    <a href="/">Kembali ke Laman Utama</a>
+    <div class="brand"><span class="bstar">★</span>&nbsp;<span class="blc1">Catur</span><span class="blc2"> Cilik!</span>&nbsp;<span class="bstar">★</span></div>
+    <a href="/"> < Kembali</a>
   </nav>
 
   <main class="wrapper">
@@ -385,33 +449,34 @@ h2{
             penuh dan pastikan anak anda sentiasa bersemangat dengan latihan harian yang terasa seperti bermain.
           </p>
         </div>
-        <div class="hero-icon">
-          <img src="../img/superrook.svg" alt="Catur Cilik logo">
-        </div>
       </div>
     </section>
 
     <section class="grid">
       <article class="card">
-        <h2>Apa Yang Anda Dapat</h2>
-        <p class="lead">Pengalaman pembelajaran lengkap yang direka khas untuk kanak-kanak dan pemain catur pertama kali.</p>
+        <h2>Apa Yang Anda Akan Dapat</h2>
+        <p class="lead">Pengalaman pembelajaran lengkap yang direka khas untuk kanak-kanak bermain catur pertama kali.</p>
         <ul class="list">
-          <li><strong>Akses Puzzle Tanpa Had:</strong> Berlatih setiap buah catur dengan tahap yang semakin mencabar.</li>
-          <li><strong>Penjejakan Kemajuan:</strong> Lihat bintang, medal, dan pencapaian bertambah setiap minggu.</li>
-          <li><strong>Panduan Mesra Kanak-kanak:</strong> Arahan mudah dan isyarat visual untuk pembelajaran yang yakin.</li>
-          <li><strong>Kemas Kini Kandungan Baharu:</strong> Cabaran segar dan aktiviti pembelajaran ditambah secara berkala.</li>
+          <li><span class="star-icon">★</span><span><strong>Akses Puzzle Tanpa Had:</strong> Berlatih setiap buah catur dengan tahap yang semakin mencabar.</span></li>
+          <li><span class="star-icon">★</span><span><strong>Penjejakan Kemajuan:</strong> Lihat bintang, medal, dan pencapaian bertambah setiap minggu.</span></li>
+          <li><span class="star-icon">★</span><span><strong>Panduan Mesra Kanak-kanak:</strong> Arahan mudah dan isyarat visual untuk pembelajaran yang yakin.</span></li>
+          <li><span class="star-icon">★</span><span><strong>Kemas Kini Kandungan Baharu:</strong> Cabaran segar dan aktiviti pembelajaran ditambah secara berkala.</span></li>
         </ul>
 
         <h2 style="margin-top:18px">Cara Daftar</h2>
         <p class="lead">Hanya perlu seminit untuk mendaftar dan mula belajar.</p>
-        <ol class="steps">
-          <li><span class="step-n">1</span><span>Tekan butang "Daftar Sekarang" di bawah.</span></li>
-          <li><span class="step-n">2</span><span>Lengkapkan borang pendaftaran.</span></li>
-          <li><span class="step-n">3</span><span>Sertai support group dan terima butiran akses anda</span></li>
-          <li><span class="step-n">4</span><span>Log masuk dan mula menyelesaikan puzzle catur sekarang.</span></li>
-        </ol>
-        <!-- <p class="small-note" style="margin-top:10px">Anda juga boleh nyatakan tarikh mula pilihan anda dalam emel tersebut.</p>
-      </article> -->
+        <div class="steps-row">
+          <ol class="steps">
+            <li><span class="step-n">1</span><span>Tekan butang "Daftar Sekarang" di bawah.</span></li>
+            <li><span class="step-n">2</span><span>Lengkapkan borang pendaftaran.</span></li>
+            <li><span class="step-n">3</span><span>Sertai support group dan terima butiran akses anda</span></li>
+            <li><span class="step-n">4</span><span>Log masuk dan mula main puzzle catur sekarang.</span></li>
+          </ol>
+          <div class="steps-mascot">
+            <img src="../img/superrook.svg" alt="SuperRook">
+          </div>
+        </div>
+      </article>
 
     </section>
 

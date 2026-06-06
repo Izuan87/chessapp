@@ -28,7 +28,24 @@ body.auth-locked #main-area{display:none}
   width:min(100%,420px);background:rgba(255,255,255,.96);border-radius:20px;
   padding:28px 24px 22px;box-shadow:0 20px 70px rgba(0,0,0,.28);text-align:center;
 }
-.login-logo img{width:76px;height:76px;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(0,0,0,.18))}
+.login-logo{margin-bottom:4px}
+.logo-lockup{position:relative;display:inline-block;margin-top:38px}
+.logo-kids-text{
+  position:absolute;
+  top:-34px;left:50%;
+  transform:translateX(-50%);
+  white-space:nowrap;
+  font-family:'Fredoka One',cursive;
+  font-size:1.85rem;
+  line-height:1;
+  letter-spacing:.5px;
+  filter:drop-shadow(0 2px 0 rgba(0,0,0,.12));
+}
+.logo-kids-text::before{content:'★ ';font-size:1rem;color:#f0a500;vertical-align:middle}
+.logo-kids-text::after{content:' ★';font-size:1rem;color:#2b9fd8;vertical-align:middle}
+.logo-c1{color:#2b9fd8}
+.logo-c2{color:#f0a500}
+.login-logo img{width:86px;height:86px;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(0,0,0,.18))}
 .login-title{font-family:'Fredoka One',cursive;font-size:1.9rem;color:#1a86bb;line-height:1.1;margin:12px 0 6px}
 .login-sub{font-size:.88rem;line-height:1.5;color:#5e6b78;margin-bottom:18px}
 .login-form{display:flex;flex-direction:column;gap:12px;text-align:left}
@@ -50,15 +67,28 @@ body.auth-locked #main-area{display:none}
 .password-wrap input::-ms-reveal,
 .password-wrap input::-ms-clear{display:none}
 .login-field input:focus{border-color:#2b9fd8;box-shadow:0 0 0 4px rgba(43,159,216,.16)}
-.login-submit{width:100%;margin:4px 0 0;padding:12px 18px;border-radius:12px;font-size:.96rem}
-.login-subscribe{
-  width:100%;margin:0;padding:12px 18px;border-radius:12px;font-size:.92rem;
-  background:#f0a500;color:#fff;text-decoration:none;display:inline-flex;
-  align-items:center;justify-content:center;font-weight:800;
-  box-shadow:0 2px 8px rgba(0,0,0,.15);transition:all .18s;
+.login-submit{
+  width:100%;margin:4px 0 0;padding:14px 18px;border-radius:12px;
+  font-size:1rem;font-weight:900;letter-spacing:.3px;
+  background:#2b9fd8;color:#fff;border:none;cursor:pointer;
+  box-shadow:0 4px 14px rgba(43,159,216,.35);
+  transition:background .18s,transform .15s,box-shadow .15s;
 }
-.login-subscribe:hover{background:#e09500;transform:translateY(-1px)}
-.login-subscribe:active{transform:scale(.97)}
+.login-submit:hover{background:#1a86bb;transform:translateY(-1px);box-shadow:0 6px 18px rgba(43,159,216,.4)}
+.login-submit:active{transform:scale(.97)}
+.login-divider{
+  display:flex;align-items:center;gap:10px;
+  color:#aab4be;font-size:.76rem;font-weight:700;letter-spacing:.4px;
+  margin:2px 0;
+}
+.login-divider::before,.login-divider::after{content:'';flex:1;height:1px;background:#e0e8ef}
+.login-subscribe{
+  width:100%;margin:0;padding:13px 18px;border-radius:12px;font-size:.96rem;
+  background:#f0a500;border:none;color:#fff;
+  text-decoration:none;display:inline-flex;align-items:center;
+  justify-content:center;font-weight:900;letter-spacing:.3px;
+  box-shadow:0 4px 14px rgba(240,165,0,.3);
+}
 .login-status{min-height:20px;font-size:.77rem;font-weight:700;text-align:center;color:#c0392b}
 .login-status.success{color:#1e8449}
 .login-foot{margin-top:10px;font-size:.72rem;color:#7b8791;line-height:1.45}
@@ -78,10 +108,12 @@ body.auth-ready .logout-btn{display:inline-block}
   padding:0 20px;height:44px;flex-shrink:0;
 }
 #topnav-logo{
-  font-family:'Fredoka One',cursive;font-size:1.1rem;color:#fff;
-  cursor:pointer;display:flex;align-items:center;gap:8px;letter-spacing:.3px;
+  font-family:'Fredoka One',cursive;font-size:1.4rem;color:#fff;
+  cursor:pointer;display:flex;align-items:center;gap:4px;letter-spacing:.4px;
+  text-shadow:0 1px 4px rgba(0,0,0,.18);
 }
-#topnav-logo img{width:22px;height:22px;object-fit:contain;filter:drop-shadow(0 1px 3px rgba(0,0,0,.35));flex-shrink:0}
+#topnav-logo .nav-star{color:#fff;font-size:.9rem;line-height:1}
+#topnav-logo .nav-c2{color:#fff}
 #topnav-logo.hidden{display:none}
 #topnav-right{display:flex;gap:10px;align-items:center}
 .nav-home-icon{display:block;width:16px;height:16px}
@@ -300,8 +332,13 @@ body.auth-ready .logout-btn{display:inline-block}
 
 <div id="login-screen" class="active">
   <div class="login-shell">
-    <div class="login-logo"><img src="img/SuperRook.png" alt="Catur Cilik logo"></div>
-    <div class="login-title">Catur Cilik!</div>
+    <div class="login-logo">
+      <div class="logo-lockup">
+        <div class="logo-kids-text"><span class="logo-c1">Catur</span><span class="logo-c2"> Cilik!</span></div>
+        <img src="img/SuperRook.png" alt="Catur Cilik mascot">
+      </div>
+    </div>
+    <div class="login-title" style="font-size:1rem;margin:10px 0 4px;color:#5e6b78;font-family:'Nunito',sans-serif;font-weight:800">Jom Belajar Catur! ♟</div>
     <!-- <div class="login-sub">Log in to continue learning chess. Your access stays active for 24 hours before a new login is required.</div> -->
     <form class="login-form" id="login-form">
       <div class="login-field">
@@ -316,7 +353,8 @@ body.auth-ready .logout-btn{display:inline-block}
         </div>
       </div>
       <div class="login-status" id="login-status"></div>
-      <button class="btn btn-go login-submit" id="login-submit" type="submit">Log In</button>
+      <button class="login-submit" id="login-submit" type="submit">Log In</button>
+      <div class="login-divider">atau</div>
       <a class="login-subscribe" id="btn-login-subscribe" href="/subs/">Daftar</a>
     </form>
     </div>
@@ -324,7 +362,7 @@ body.auth-ready .logout-btn{display:inline-block}
 
 <!-- TOP NAV -->
 <div id="topnav">
-  <div id="topnav-logo" onclick="G.goHome()"><img src="img/SuperRook.png" alt="SuperRook logo"> Catur Cilik!</div>
+  <div id="topnav-logo" onclick="G.goHome()"><span class="nav-star">★</span> Catur <span class="nav-c2">Cilik!</span> <span class="nav-star">★</span></div>
   <div id="topnav-right">
     <button class="nav-btn" id="btn-nav-home" onclick="G.goHome()" aria-label="Home" title="Home"><svg class="nav-home-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.8V21h14V9.8"></path><path d="M10 21v-6h4v6"></path></svg></button>
     <button class="nav-btn logout-btn" id="btn-logout" type="button" onclick="Auth.logout()">Logout</button>
@@ -621,7 +659,7 @@ const I18N={
   },
   BM:{
     navHome:'Laman Utama',navDashboard:'Papan Pemuka',topDashboard:'Papan Pemuka',
-    heroHomeTitle:'Jom main catur',
+    heroHomeTitle:'Jom main catur!',
     heroHomeSub:'Belajar setiap buah catur melalui puzzles seronok tanpa had.',
     heroPuzzles:'Puzzles',heroUnlimited:'Cabaran tanpa had!',
     score:'Skor',starsLeft:'baki',streakSuffix:'x berturut',
@@ -745,7 +783,7 @@ function homeIconMarkup(){
 }
 
 function topnavBrandMarkup(){
-  return '<img src="'+LOGO_SRC+'" alt="SuperRook logo"> Catur Cilik!';
+  return '<span class="nav-star">★</span> Catur <span class="nav-c2">Cilik!</span> <span class="nav-star">★</span>';
 }
 
 function syncTopnavBrand(){
