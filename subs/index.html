@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catur Cilik | Subscription</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#2b9fd8;
+  --blue-dark:#1a86bb;
+  --gold:#f0a500;
+  --green:#27ae60;
+  --bg:#e8edf2;
+  --card:#ffffff;
+  --text:#333;
+  --muted:#5e6b78;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Nunito','Segoe UI',sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 12% 0%, rgba(43,159,216,.22), transparent 45%),
+    radial-gradient(circle at 85% 10%, rgba(240,165,0,.2), transparent 40%),
+    linear-gradient(180deg, #f4f8fc 0%, var(--bg) 65%);
+  min-height:100vh;
+}
+.nav{
+  height:52px;
+  background:linear-gradient(180deg,var(--blue) 0%, var(--blue-dark) 100%);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+  box-shadow:0 6px 16px rgba(0,0,0,.14);
+}
+.brand{
+  font-family:'Fredoka One',cursive;
+  letter-spacing:.2px;
+  font-size:1.1rem;
+}
+.nav a{
+  color:#fff;
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,.45);
+  border-radius:8px;
+  padding:7px 12px;
+  font-size:.86rem;
+  font-weight:800;
+}
+.wrapper{
+  width:min(980px,94vw);
+  margin:26px auto 34px;
+}
+.hero{
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  border-radius:22px;
+  padding:28px 24px;
+  color:#fff;
+  box-shadow:0 16px 38px rgba(26,134,187,.25);
+  position:relative;
+  overflow:hidden;
+}
+.hero-inner{
+  position:relative;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:22px;
+}
+.hero-icon{
+  flex:0 0 auto;
+  width:110px;
+  height:110px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:transparent;
+  pointer-events:none;
+  filter:drop-shadow(0 4px 12px rgba(0,0,0,.22));
+}
+.hero-icon img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+.hero-copy{flex:1;min-width:0;max-width:740px}
+.hero::after{
+  content:'';
+  position:absolute;
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  right:-60px;
+  top:-90px;
+  background:rgba(255,255,255,.12);
+}
+.badge{
+  display:inline-block;
+  background:rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.4);
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:.8rem;
+  font-weight:800;
+  margin-bottom:10px;
+}
+h1{
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(1.85rem,3.6vw,2.5rem);
+  line-height:1.1;
+  margin-bottom:8px;
+  max-width:760px;
+}
+.hero p{
+  font-size:1rem;
+  line-height:1.6;
+  max-width:760px;
+  color:rgba(255,255,255,.94);
+}
+.grid{
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:16px;
+}
+.card{
+  background:var(--card);
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 10px 24px rgba(0,0,0,.08);
+}
+h2{
+  font-family:'Fredoka One',cursive;
+  color:var(--blue-dark);
+  font-size:1.35rem;
+  margin-bottom:10px;
+}
+.lead{
+  color:var(--muted);
+  margin-bottom:10px;
+  line-height:1.55;
+}
+.list{
+  list-style:none;
+  display:grid;
+  gap:10px;
+}
+.list li{
+  background:#f7fbff;
+  border:1px solid #d4e6f3;
+  border-radius:12px;
+  padding:11px 12px;
+}
+.list strong{color:var(--blue-dark)}
+.steps{
+  list-style:none;
+  display:grid;
+  gap:9px;
+  margin-top:8px;
+}
+.steps li{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  line-height:1.5;
+}
+.step-n{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  background:var(--gold);
+  color:#fff;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  flex:0 0 28px;
+}
+.price-box{
+  margin-top:12px;
+  border-radius:14px;
+  border:1px solid #b7e8cb;
+  background:linear-gradient(180deg, #f4fff9, #ebfff3);
+  padding:12px;
+}
+.price-box p{line-height:1.5;color:#245d3a}
+.cta{
+  margin-top:14px;
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  border:none;
+  width:100%;
+  background:var(--gold);
+  color:#fff;
+  border-radius:12px;
+  padding:13px 14px;
+  font-weight:900;
+  letter-spacing:.2px;
+  font-size:1rem;
+  box-shadow:0 8px 16px rgba(240,165,0,.35);
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.cta:hover{transform:translateY(-2px);background:#e09500;box-shadow:0 10px 18px rgba(224,149,0,.38)}
+.cta:active{transform:translateY(0)}
+.small-note{
+  margin-top:8px;
+  color:#6f7d8b;
+  font-size:.83rem;
+  text-align:center;
+}
+.pricing-wrap{margin-top:20px}
+.pricing-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+.p-card{
+  background:#f7fbff;
+  border-radius:18px;
+  padding:26px 22px;
+  color:var(--text);
+  position:relative;
+  border:1px solid #d4e6f3;
+}
+.p-promo{
+  border:2px solid var(--blue);
+  box-shadow:0 0 28px rgba(43,159,216,.15);
+  background:#f0f8ff;
+}
+.promo-badge{
+  position:absolute;
+  top:-14px;
+  left:50%;
+  transform:translateX(-50%);
+  white-space:nowrap;
+  background:var(--blue);
+  color:#fff;
+  font-size:.75rem;
+  font-weight:900;
+  letter-spacing:.6px;
+  padding:5px 18px;
+  border-radius:999px;
+}
+.p-label{
+  font-size:.75rem;
+  font-weight:900;
+  letter-spacing:.8px;
+  color:var(--muted);
+  margin-bottom:10px;
+}
+.promo-lbl{color:var(--blue-dark)}
+.p-price{
+  font-family:'Fredoka One',cursive;
+  font-size:2.5rem;
+  line-height:1;
+  margin-bottom:6px;
+}
+.p-price-row{
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.promo-price{margin-bottom:0}
+.p-strike{
+  font-size:.95rem;
+  color:#9aacbb;
+  text-decoration:line-through;
+}
+.p-subdesc{color:var(--muted);font-size:.87rem;margin-bottom:14px}
+.p-savings{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:6px 0 14px;
+  flex-wrap:wrap;
+}
+.save-tag{
+  background:var(--green);
+  color:#fff;
+  font-size:.75rem;
+  font-weight:900;
+  padding:3px 10px;
+  border-radius:6px;
+  letter-spacing:.3px;
+}
+.save-amt{color:#f0a500;font-size:.88rem;font-weight:700}
+.p-list{
+  list-style:none;
+  display:grid;
+  gap:9px;
+  margin-bottom:22px;
+}
+.p-list li{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-size:.93rem;
+  color:var(--text);
+  line-height:1.4;
+}
+.ico{
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:.72rem;
+  font-weight:900;
+  flex:0 0 22px;
+}
+.ico.bad{background:#fdecea;color:#e74c3c;border:1px solid #f5c6c2}
+.ico.dim{background:#f0f2f4;color:#aab4be;border:1px solid #d8dfe6}
+.ico.good{background:#e6f9ee;color:#27ae60;border:1px solid #b8e8cc}
+.p-btn-plain{
+  width:100%;
+  text-align:center;
+  background:transparent;
+  border:1px solid #ccd8e4;
+  color:var(--muted);
+  border-radius:10px;
+  padding:12px 14px;
+  font-size:.9rem;
+  font-weight:700;
+}
+.p-btn-buy{
+  display:block;
+  width:100%;
+  text-align:center;
+  text-decoration:none;
+  background:var(--gold);
+  color:#fff;
+  border-radius:10px;
+  padding:13px 14px;
+  font-weight:900;
+  font-size:1rem;
+  box-shadow:0 6px 18px rgba(240,165,0,.35);
+  transition:transform .15s,box-shadow .15s,background .15s;
+}
+.p-btn-buy:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(240,165,0,.45);background:#e09500}
+.p-btn-buy:active{transform:translateY(0)}
+.footer{
+  margin:18px 0 2px;
+  text-align:center;
+  color:#6f7d8b;
+  font-size:.86rem;
+}
+@media (max-width:860px){
+  .grid{grid-template-columns:1fr}
+}
+@media (max-width:620px){
+  .nav{padding:0 12px}
+  .brand{font-size:1rem}
+  .nav a{padding:6px 10px;font-size:.8rem}
+  .hero{padding:22px 16px}
+  .hero-inner{gap:10px;align-items:flex-start}
+  .hero-icon{width:72px;height:72px}
+  .wrapper{margin:18px auto 24px}
+  .pricing-grid{grid-template-columns:1fr}
+  .p-promo{margin-top:14px}
+}
+</style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="brand">Catur Cilik!</div>
+    <a href="/">Kembali ke Laman Utama</a>
+  </nav>
+
+  <main class="wrapper">
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <!-- <span class="badge">Subscription Page</span> -->
+          <h1>Bina keyakinan catur anak anda, belajar catur sambil bermain</h1>
+          <p>
+            Catur Cilik membantu pemula belajar catur melalui puzzle  visual yang menyeronokkan, latihan
+            pergerakan berpandu, dan kemajuan berasaskan pencapaian. Langgan untuk membuka laluan pembelajaran
+            penuh dan pastikan anak anda sentiasa bersemangat dengan latihan harian yang terasa seperti bermain.
+          </p>
+        </div>
+        <div class="hero-icon">
+          <img src="../img/superrook.svg" alt="Catur Cilik logo">
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Apa Yang Anda Dapat</h2>
+        <p class="lead">Pengalaman pembelajaran lengkap yang direka khas untuk kanak-kanak dan pemain catur pertama kali.</p>
+        <ul class="list">
+          <li><strong>Akses Puzzle Tanpa Had:</strong> Berlatih setiap buah catur dengan tahap yang semakin mencabar.</li>
+          <li><strong>Penjejakan Kemajuan:</strong> Lihat bintang, medal, dan pencapaian bertambah setiap minggu.</li>
+          <li><strong>Panduan Mesra Kanak-kanak:</strong> Arahan mudah dan isyarat visual untuk pembelajaran yang yakin.</li>
+          <li><strong>Kemas Kini Kandungan Baharu:</strong> Cabaran segar dan aktiviti pembelajaran ditambah secara berkala.</li>
+        </ul>
+
+        <h2 style="margin-top:18px">Cara Daftar</h2>
+        <p class="lead">Hanya perlu seminit untuk mendaftar dan mula belajar.</p>
+        <ol class="steps">
+          <li><span class="step-n">1</span><span>Tekan butang "Daftar Sekarang" di bawah.</span></li>
+          <li><span class="step-n">2</span><span>Lengkapkan borang pendaftaran.</span></li>
+          <li><span class="step-n">3</span><span>Sertai support group dan terima butiran akses anda</span></li>
+          <li><span class="step-n">4</span><span>Log masuk dan mula menyelesaikan puzzle catur sekarang.</span></li>
+        </ol>
+        <!-- <p class="small-note" style="margin-top:10px">Anda juga boleh nyatakan tarikh mula pilihan anda dalam emel tersebut.</p>
+      </article> -->
+
+    </section>
+
+    <div class="pricing-wrap">
+      <div class="pricing-grid">
+
+        <div class="p-card">
+          <div class="p-label">HARGA NORMAL</div>
+          <div class="p-price">RM <span>49.00</span></div>
+          <div class="p-subdesc">Harga normal pelan ini</div>
+          <ul class="p-list">
+            <li><span class="ico dim">✓</span>Game Interaktif Puzzle Catur Lengkap 'From Zero to Hero'</li>
+              <li><span class="ico dim">✓</span>eBook Roadmap Juara Catur Cilik</li>
+            <li><span class="ico dim">✓</span>Info Pertandingan Catur di Dalam dan Luar Negara</li>
+          </ul>
+          <div class="p-btn-plain">Harga Normal</div>
+        </div>
+
+        <div class="p-card p-promo">
+          <div class="promo-badge">PROMO SEKARANG</div>
+          <div class="p-label promo-lbl">PROMOSI</div>
+          <div class="p-price-row">
+            <div class="p-price promo-price">RM <span>0.00</span></div>
+            <div class="p-strike">RM 49.00</div>
+          </div>
+          <div class="p-savings">
+            <span class="save-tag">TRIAL</span>
+            <span class="save-amt">(Jimat RM 49.00)</span>
+          </div>
+          <ul class="p-list">
+            <li><span class="ico good">✓</span>Modul Game Interaktif Puzzle Catur yang Terhad</li>
+            <li><span class="ico good">✓</span>Akses trial Sehingga 1 Julai 2026</li>
+            <li><span class="ico good">✓</span>Jimat <strong>RM 49.00</strong></li>
+          </ul>
+          <a class="p-btn-buy" href="https://docs.google.com/forms/d/e/1FAIpQLScGmxHX32DGv1m4BfuXY6TOfoQtmu_BBHC0qOyC7vPScyFCiw/viewform" target="_blank" rel="noopener">Daftar Sekarang</a>
+        </div>
+
+      </div>
+    </div>
+
+    <p class="footer">Catur Cilik: belajar catur dengan cara yang menyeronokkan, jelas, dan menggalakkan.</p>
+  </main>
+</body>
+</html>
