@@ -297,6 +297,11 @@ h2{
   box-shadow:0 0 28px rgba(43,159,216,.15);
   background:#f0f8ff;
 }
+.p-pakej{
+  border:2px solid var(--green);
+  box-shadow:0 0 28px rgba(39,174,96,.15);
+  background:#f4fff9;
+}
 .promo-badge{
   position:absolute;
   top:-14px;
@@ -311,6 +316,7 @@ h2{
   padding:5px 18px;
   border-radius:999px;
 }
+.pakej-badge{background:var(--green)}
 .p-label{
   font-size:.75rem;
   font-weight:900;
@@ -319,6 +325,7 @@ h2{
   margin-bottom:10px;
 }
 .promo-lbl{color:var(--blue-dark)}
+.pakej-lbl{color:var(--green)}
 .p-price{
   font-family:'Fredoka One',cursive;
   font-size:2.5rem;
@@ -337,6 +344,7 @@ h2{
   color:#9aacbb;
   text-decoration:line-through;
 }
+.p-strike-lg{font-size:1.2rem}
 .p-subdesc{color:var(--muted);font-size:.87rem;margin-bottom:14px}
 .p-savings{
   display:flex;
@@ -354,6 +362,7 @@ h2{
   border-radius:6px;
   letter-spacing:.3px;
 }
+.save-tag-blue{background:var(--blue)}
 .save-amt{color:#f0a500;font-size:.88rem;font-weight:700}
 .p-list{
   list-style:none;
@@ -384,16 +393,21 @@ h2{
 .ico.dim{background:#f0f2f4;color:#aab4be;border:1px solid #d8dfe6}
 .ico.good{background:#e6f9ee;color:#27ae60;border:1px solid #b8e8cc}
 .p-btn-plain{
+  display:block;
   width:100%;
   text-align:center;
-  background:transparent;
-  border:1px solid #ccd8e4;
-  color:var(--muted);
+  text-decoration:none;
+  background:var(--green);
+  border:none;
+  color:#fff;
   border-radius:10px;
   padding:12px 14px;
   font-size:.9rem;
   font-weight:700;
+  box-shadow:0 6px 14px rgba(39,174,96,.3);
+  transition:background .15s ease, transform .15s ease;
 }
+.p-btn-plain:hover{background:#1e8449;transform:translateY(-1px)}
 .p-btn-buy{
   display:block;
   width:100%;
@@ -483,33 +497,44 @@ h2{
     <div class="pricing-wrap">
       <div class="pricing-grid">
 
-        <div class="p-card">
-          <div class="p-label">HARGA NORMAL</div>
-          <div class="p-price">RM <span>49.00</span></div>
-          <div class="p-subdesc">Harga normal pelan ini</div>
+        <div class="p-card p-pakej">
+          <div class="promo-badge pakej-badge">PROMO PAKEJ</div>
+          <div class="p-label pakej-lbl">HARGA PAKEJ</div>
+          <div class="p-price-row">
+            <div class="p-price">RM <span>49.00</span></div>
+            <div class="p-strike p-strike-lg">RM 59.00</div>
+          </div>
+          <div class="p-savings">
+            <span class="save-tag">PAKEJ</span>
+            <span class="save-amt">(Jimat RM 10.00)</span>
+          </div>
+          <div class="p-subdesc">Harga pakej pelan ini</div>
           <ul class="p-list">
-            <li><span class="ico dim">✓</span>Game Interaktif Puzzle Catur Lengkap 'From Zero to Hero'</li>
-              <li><span class="ico dim">✓</span>eBook Roadmap Juara Catur Cilik</li>
-            <li><span class="ico dim">✓</span>Info Pertandingan Catur di Dalam dan Luar Negara</li>
+            <li><span class="ico good">✓</span>Game Interaktif Puzzle Catur Tanpa Had</li>
+            <li><span class="ico good">✓</span>eBook Roadmap Juara Catur Cilik</li>
+            <li><span class="ico good">✓</span>Support Group Catur Cilik</li>
+            <li><span class="ico good">✓</span>Online Sparring Group Catur Cilik</li>
           </ul>
-          <div class="p-btn-plain">Harga Normal</div>
+          <a class="p-btn-plain" href="https://wa.me/60105565030?text=Saya%20berminat%20promo%20pakej%20CaturCilik" target="_blank" rel="noopener">Dapatkan di Whatsapp</a>
         </div>
 
         <div class="p-card p-promo">
-          <div class="promo-badge">PROMO SEKARANG</div>
+          <div class="promo-badge">PROMO TRIAL</div>
           <div class="p-label promo-lbl">PROMOSI</div>
           <div class="p-price-row">
             <div class="p-price promo-price">RM <span>0.00</span></div>
-            <div class="p-strike">RM 49.00</div>
+            <!-- <div class="p-strike">RM 49.00</div> -->
           </div>
           <div class="p-savings">
-            <span class="save-tag">TRIAL</span>
-            <span class="save-amt">(Jimat RM 49.00)</span>
+            <span class="save-tag save-tag-blue">TRIAL</span>
+            <!-- <span class="save-amt">(Jimat RM 49.00)</span> -->
           </div>
           <ul class="p-list">
-            <li><span class="ico good">✓</span>Modul Game Interaktif Puzzle Catur yang Terhad</li>
-            <li><span class="ico good">✓</span>Akses trial Sehingga 1 Julai 2026</li>
-            <li><span class="ico good">✓</span>Jimat <strong>RM 49.00</strong></li>
+            <li><span class="ico good">✓</span>Modul game interaktif puzzle catur yang terhad</li>
+            <li><span class="ico good">✓</span>Akses trial sehingga 1 Julai 2026</li>
+            <li><span class="ico bad">✗</span>eBook Roadmap Juara Catur Cilik</li>
+            <li><span class="ico bad">✗</span>Support Group Catur Cilik</li>
+            <li><span class="ico bad">✗</span>Online Sparring Group Catur Cilik</li>
           </ul>
           <a class="p-btn-buy" href="https://docs.google.com/forms/d/e/1FAIpQLScGmxHX32DGv1m4BfuXY6TOfoQtmu_BBHC0qOyC7vPScyFCiw/viewform" target="_blank" rel="noopener">Daftar Sekarang</a>
         </div>

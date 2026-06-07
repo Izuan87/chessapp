@@ -397,6 +397,7 @@ body.auth-ready .logout-btn{display:inline-block}
 
   <!-- HOME CARDS -->
   <div id="home-area" class="active">
+    <div class="hb-section-title" id="beginner-modules-title">Beginner Modules</div>
     <div class="hb-grid" id="home-cards-grid"></div>
     <div class="hb-section-title" id="advanced-modules-title">Advanced Modules</div>
     <div class="hb-grid" id="advanced-cards-grid"></div>
@@ -651,7 +652,7 @@ const I18N={
     score:'Score',starsLeft:'left',streakSuffix:'x streak',
     puzzle:'Puzzle',obstacle:'obstacle',obstacles:'obstacles',
     selectPiece:'Select a piece to start!',choosePiece:'Choose a piece card above to play!',
-    gotIt:'Got it!',advModules:'Advanced Modules',
+    gotIt:'Got it!',beginnerModules:'Beginner Modules',advModules:'Advanced Modules',
     myDashboard:'My Dashboard',piecesPlayed:'Pieces Played',medalMilestones:'Medal Milestones',
     goodTry:'Good try!',wellDone:'Well done!',perfect:'Perfect!',
     nextPuzzleIn:'Next puzzle in',oops:'Oops! Don\'t give up!',
@@ -665,7 +666,7 @@ const I18N={
     score:'Skor',starsLeft:'baki',streakSuffix:'x berturut',
     puzzle:'Puzzles',obstacle:'halangan',obstacles:'halangan',
     selectPiece:'Pilih satu buah untuk mula!',choosePiece:'Pilih kad buah di atas untuk bermain!',
-    gotIt:'Faham!',advModules:'Modul Lanjutan',
+    gotIt:'Faham!',beginnerModules:'Modul Permulaan',advModules:'Modul Lanjutan',
     myDashboard:'Papan Pemuka Saya',piecesPlayed:'Buah Dimainkan',medalMilestones:'Pencapaian Pingat',
     goodTry:'Cuba lagi!',wellDone:'Syabas!',perfect:'Sempurna!',
     nextPuzzleIn:'Puzzles seterusnya dalam',oops:'Alamak! Jangan putus asa!',
@@ -735,6 +736,7 @@ function applyLanguage(){
   const navHome=document.getElementById('btn-nav-home');
   const navDash=document.getElementById('btn-nav-dashboard');
   const topDash=document.getElementById('btn-dashboard-top');
+  const beginnerTitle=document.getElementById('beginner-modules-title');
   const advTitle=document.getElementById('advanced-modules-title');
   const dashTitle=document.getElementById('dashboard-title');
   const piecesTitle=document.getElementById('db-pieces-title');
@@ -747,6 +749,7 @@ function applyLanguage(){
   }
   if(navDash)navDash.textContent=tr('navDashboard');
   if(topDash)topDash.innerHTML='&#127942; '+tr('topDashboard');
+  if(beginnerTitle)beginnerTitle.textContent=tr('beginnerModules');
   if(advTitle)advTitle.textContent=tr('advModules');
   if(dashTitle)dashTitle.innerHTML='&#127942; '+tr('myDashboard');
   if(piecesTitle)piecesTitle.textContent=tr('piecesPlayed');
