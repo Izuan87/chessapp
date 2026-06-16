@@ -487,19 +487,13 @@ const LOGO_RAW_SRC='img/SuperRook.png';
 let LOGO_SRC=LOGO_RAW_SRC;
 const LANG_KEY='caturcilik_lang';
 const AUTH_KEY='caturcilik_auth_v1';
-const AUTH_FILE='config/auth.xlsx';
+const AUTH_LOGIN_ENDPOINT='https://script.google.com/macros/s/AKfycbwyy79X049o35Vb5aANpKwOK1Q0gPwyqcLIyZL21ALWeKa4z1T4fC_3QoJWnutIb9w2/exec';
 const AUTH_DURATION_MS=24*60*60*1000;
 let LANG=localStorage.getItem(LANG_KEY)||'ENG';
 
 const Auth={
   user:null,
-  users:null,
   expiryTimer:null,
-  normalizeHeader(value){return String(value||'').trim().toLowerCase();},
-  isActiveStatus(value){
-    const normalized=String(value==null?'':value).trim().toLowerCase();
-    return normalized==='1'||normalized==='true'||normalized==='active'||normalized==='yes';
-  },
   readCache(){
     try{
       const raw=localStorage.getItem(AUTH_KEY);
@@ -562,32 +556,29 @@ const Auth={
     el.textContent=message||'';
     el.classList.toggle('success',!!isSuccess);
   },
-  async loadUsers(){
-    if(this.users)return this.users;
-    if(typeof XLSX==='undefined')throw new Error('Login library failed to load.');
-    const response=await fetch(AUTH_FILE,{cache:'no-store'});
-    if(!response.ok)throw new Error('Unable to load login file.');
-    const buffer=await response.arrayBuffer();
-    const workbook=XLSX.read(buffer,{type:'array'});
-    const sheet=workbook.Sheets[workbook.SheetNames[0]];
-    const rows=XLSX.utils.sheet_to_json(sheet,{defval:''});
-    this.users=rows.map(row=>{
-      const normalized={};
-      Object.keys(row).forEach(key=>{normalized[this.normalizeHeader(key)]=row[key];});
-      return {
-        username:String(normalized.username||'').trim(),
-        password:String(normalized.password||''),
-        status:normalized.status
-      };
-    }).filter(user=>user.username&&user.password);
-    return this.users;
+  async requestLogin(username,password){
+    const params=new URLSearchParams({action:'login',username,password});
+    const response=await fetch(`${AUTH_LOGIN_ENDPOINT}?${params.toString()}`,{cache:'no-store'});
+    if(!response.ok)throw new Error('Login service is unavailable.');
+    let payload=null;
+    try{
+      payload=await response.json();
+    }catch(error){
+      throw new Error('Invalid login response from server.');
+    }
+    return payload;
   },
   async login(username,password){
-    const users=await this.loadUsers();
-    const match=users.find(user=>user.username===username&&user.password===password&&this.isActiveStatus(user.status));
-    if(!match)throw new Error('Invalid username, password, or inactive account.');
-    this.writeCache(match);
-    return match;
+    const result=await this.requestLogin(username,password);
+    const status=String(result?.status||result?.result||'').toLowerCase();
+    const rawMessage=result?.message||result?.error||'';
+    const success=result?.ok===true||result?.success===true||status==='success'||status==='ok'||status==='true'||result?.authenticated===true;
+    if(!success){
+      throw new Error(rawMessage||'Invalid username or password.');
+    }
+    const user={username:String(result?.username||result?.user||username).trim()||username};
+    this.writeCache(user);
+    return user;
   },
   applyCachedSession(){
     const cached=this.readCache();
