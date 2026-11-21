@@ -25,9 +25,11 @@ body{font-family:'Segoe UI','Nunito',sans-serif;background:#e8edf2;color:#333;di
 #topnav-logo.hidden{display:none}
 #topnav-right{display:flex;gap:10px;align-items:center}
 .nav-home-icon{display:block;width:16px;height:16px}
-#lang-switch{display:flex;gap:6px;align-items:center}
-.lang-btn{padding:4px 8px;min-width:44px}
-.lang-btn.active{background:#fff;color:#1a86bb;border-color:#fff}
+#lang-switch{
+  display:flex;align-items:center;gap:4px;padding:3px;
+  background:rgba(8,67,101,.3);border:1px solid rgba(255,255,255,.3);
+  border-radius:999px;box-shadow:inset 0 1px 2px rgba(0,0,0,.2);
+}
 .nav-btn{
   background:none;border:1px solid rgba(255,255,255,.5);color:#fff;
   padding:5px 14px;border-radius:4px;font-size:.78rem;font-weight:600;
@@ -36,6 +38,29 @@ body{font-family:'Segoe UI','Nunito',sans-serif;background:#e8edf2;color:#333;di
 .nav-link{display:inline-flex;align-items:center;text-decoration:none}
 .nav-btn:hover{background:rgba(255,255,255,.15)}
 .nav-btn.active{background:rgba(255,255,255,.2)}
+.lang-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  min-width:68px;padding:6px 16px;
+  border-radius:9999px;border:1px solid transparent;
+  color:rgba(255,255,255,.95);font-size:.78rem;font-weight:600;line-height:1;
+  letter-spacing:.35px;background:transparent;
+  overflow:hidden;
+  transition:transform .15s,background .15s,border-color .15s,color .15s,box-shadow .15s;
+}
+.lang-btn .lang-text{text-transform:uppercase}
+.lang-btn:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.28);transform:translateY(-1px)}
+.lang-btn:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(255,255,255,.32)}
+.lang-btn.active{
+  background:linear-gradient(180deg,#ffffff 0%,#ecf7ff 100%);
+  color:#1a86bb;border-color:rgba(255,255,255,.95);
+  box-shadow:0 2px 9px rgba(8,67,101,.35),inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+@media (max-width:640px){
+  #topnav-right{gap:8px}
+  #lang-switch{gap:3px;padding:2px}
+  .lang-btn{padding:5px 12px}
+}
 
 /* ── HERO BANNER ── */
 #hero{
@@ -87,8 +112,8 @@ body{font-family:'Segoe UI','Nunito',sans-serif;background:#e8edf2;color:#333;di
 #game-area.active{display:flex}
 #puzzle-label{font-size:.72rem;font-weight:600;color:#666;text-align:center;padding:3px 0}
 #instruction{font-size:.82rem;font-weight:800;color:#1a86bb;text-align:center;padding:2px 0 4px;min-height:22px}
-#board-wrap{display:flex;align-items:center;justify-content:center;flex:1}
-#board{display:grid;grid-template-columns:repeat(8,1fr);border:3px solid #b58863;border-radius:4px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.25)}
+#board-wrap{display:flex;align-items:center;justify-content:center;flex:1;min-height:0;width:100%}
+#board{display:grid;grid-template-columns:repeat(8,1fr);border:3px solid #b58863;border-radius:4px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.25);max-width:100%;max-height:100%;aspect-ratio:1/1}
 #board.shake{animation:shake .4s}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
 #progress-wrap{display:flex;gap:5px;padding:4px 0 5px;align-items:center;justify-content:center;flex-wrap:wrap}
@@ -246,8 +271,8 @@ body{font-family:'Segoe UI','Nunito',sans-serif;background:#e8edf2;color:#333;di
     <a class="nav-btn nav-link" id="btn-nav-subscribe" href="/subs">SUBSCRIBE</a>
     <button class="nav-btn" id="btn-nav-home" onclick="G.goHome()" aria-label="Home" title="Home"><svg class="nav-home-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.8V21h14V9.8"></path><path d="M10 21v-6h4v6"></path></svg></button>
     <div id="lang-switch">
-      <button class="nav-btn lang-btn active" id="btn-lang-eng" onclick="setLanguage('ENG')">ENG</button>
-      <button class="nav-btn lang-btn" id="btn-lang-bm" onclick="setLanguage('BM')">BM</button>
+      <button class="nav-btn lang-btn active" id="btn-lang-eng" onclick="setLanguage('ENG')" aria-label="English" title="English"><span class="lang-text">ENG</span></button>
+      <button class="nav-btn lang-btn" id="btn-lang-bm" onclick="setLanguage('BM')" aria-label="Bahasa Melayu" title="Bahasa Melayu"><span class="lang-text">BM</span></button>
     </div>
   </div>
 </div>
@@ -475,7 +500,7 @@ function applyLanguage(){
   const gameActive=document.getElementById('game-area').classList.contains('active');
   if(gameActive&&S.pieceId){
     document.getElementById('hero-title').textContent=pieceName(S.pieceId)+' '+tr('heroPuzzles');
-    document.getElementById('hero-sub').textContent=pieceTagline(S.pieceId)+' - '+tr('heroUnlimited');
+    document.getElementById('hero-sub').textContent='';
   }else{
     document.getElementById('hero-title').textContent="Let's play chess";
       document.getElementById('hero-title').textContent=tr('heroHomeTitle');
@@ -734,7 +759,12 @@ function spawnSparkles(cellEl){
 }
 
 // ── Render ────────────────────────────────────────────────────────────
-function cellSize(){const mw=Math.min(window.innerWidth-16,500),mh=window.innerHeight-175;return Math.floor(Math.min(mw,mh)/8);}
+function cellSize(){
+  const boardWrap=document.getElementById('board-wrap');
+  const availableW=Math.max(240,((boardWrap&&boardWrap.clientWidth)?boardWrap.clientWidth:window.innerWidth)-8);
+  const availableH=Math.max(224,window.innerHeight-175);
+  return Math.max(24,Math.floor(Math.min(availableW,availableH)/8));
+}
 
 function render(){
   const board=document.getElementById('board'),cs=cellSize();
@@ -1079,7 +1109,7 @@ function startPieceMode(pieceIdx){
   const p=PIECES[pieceIdx];
   document.getElementById('hero-icon').innerHTML=heroPieceMarkup(p);
   document.getElementById('hero-title').textContent=pieceName(p.id)+' '+tr('heroPuzzles');
-  document.getElementById('hero-sub').textContent=pieceTagline(p.id)+' — '+tr('heroUnlimited');
+  document.getElementById('hero-sub').textContent='';
   G.nextPuzzle();
 }
 
