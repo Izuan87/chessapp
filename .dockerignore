@@ -1,0 +1,12 @@
+# Allowlist: ignore everything, then re-include only what the site serves.
+# Keeps config/auth.xlsx, .git, screenshots and design files out of the image.
+*
+
+!nginx.conf
+!index.html
+!chessapp.html
+!img/
+!subs/
+
+**/.DS_Store
+img/SuperRook.1png

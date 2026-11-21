@@ -1,0 +1,11 @@
+services:
+  catur-cilik:
+    build: .
+    image: catur-cilik:latest
+    container_name: catur-cilik
+    ports:
+      - "8080:8080"   # http://localhost:8080
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
